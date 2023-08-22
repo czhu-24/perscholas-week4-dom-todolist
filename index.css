@@ -1,0 +1,39 @@
+h1 {
+    color: blue;
+    text-align: center;
+}
+.grid-container{
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 1fr 100px;
+    max-width: 50%;
+    gap: 25px;
+    margin: 0 auto;
+}
+
+.grid-container > input, .grid-container > .list {
+    background-color: #FFF9C4;
+}
+
+.grid-container > .list {
+    border: 1px black solid;
+}
+
+.grid-container > #add-task {
+    height: 50px;
+    width: 50px;
+    align-self: center;
+    justify-self: center;
+}
+
+.grid-container > #reset-tasks {
+    height: 50px;
+    width: 50px;
+    align-self: center;
+    justify-self: center;
+}
+
+.flex-container{
+    display: flex;
+    justify-content: flex-start;
+}
