@@ -1,5 +1,3 @@
-// TO DO: if task is empty, do nothing
-
 const addBtnEl = document.getElementById("add-task");
 const resetBtnEl = document.getElementById("reset-tasks");
 const listEl = document.getElementsByClassName("list")[0];
@@ -22,6 +20,7 @@ const addTask = () => {
     // making checkbox to hold if task was done or not
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.id = "id-" + tasksArray.length;
     // add eventListener to the checkbox
     checkbox.addEventListener('click', completeTask);
 
@@ -44,11 +43,10 @@ const resetTasks = () => {
 }
 
 const completeTask = (e) => {
-    console.log(e.target.nextSibling.textContent);
-
-    console.log("I completed a thing. gimme a star");
     // get the checkbox's parent node to remove itself from DOM (along w/ its children)
-    e.target.parentNode.remove();
+    
+    e.target.parentNode.style.display = "none";
+    console.log(e.target.parentNode.display);
 }
 
 addBtnEl.addEventListener('click', addTask);

@@ -4,19 +4,24 @@ h1 {
 }
 .grid-container{
     display: grid;
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: 100px 1fr 1fr;
     grid-template-columns: 1fr 100px;
     max-width: 50%;
     gap: 25px;
     margin: 0 auto;
 }
 
-.grid-container > input, .grid-container > .list {
+.grid-container > input, .grid-container > .list, .grid-container > .completed-list {
     background-color: #FFF9C4;
 }
 
-.grid-container > .list {
+.grid-container > .list, .grid-container > .completed-list {
     border: 1px black solid;
+}
+
+/* completed list only displays when stuff has been completed */
+.completed-list{
+    display: none;
 }
 
 .grid-container > #add-task {
