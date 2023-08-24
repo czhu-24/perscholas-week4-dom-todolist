@@ -21,7 +21,7 @@ h1 {
 
 /* completed list only displays when stuff has been completed */
 .completed-list{
-    display: none;
+    /* TODO, add .hide class to the div once it's hidden */
 }
 
 .grid-container > #add-task {
