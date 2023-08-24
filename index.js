@@ -1,6 +1,7 @@
 const addBtnEl = document.getElementById("add-task");
 const resetBtnEl = document.getElementById("reset-tasks");
 const listEl = document.getElementsByClassName("list")[0];
+const completedListEl = document.getElementsByClassName("completed-list")[0];
 const inputFieldEl = document.querySelector("input");
 const completedListEl = document.getElementsByClassName("completed-list")[0];
 
@@ -21,7 +22,7 @@ const addTask = () => {
     // making checkbox to hold if task was done or not
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.id = "id-" + tasksArray.length;
+    checkbox.id = tasksArray.length;
     // add eventListener to the checkbox
     checkbox.addEventListener('click', completeTask);
 
@@ -46,34 +47,29 @@ const resetTasks = () => {
 const completeTask = (e) => {
     // get the checkbox's parent node to remove itself from DOM (along w/ its children)
 
-    let id = e.target.getAttribute("id");
-    let idNumber = id.substring(3, id.length);
+    const completedTaskDiv = e.target.parentNode;
+    // if you append / appendChild a div to a DOM element, it'll remove the div element from wherever it was in the DOM originally (if it was in the DOM)
+    completedListEl.append(completedTaskDiv);
 
-    // set the corresponding task in tasksArray so that its isCompleted property is true
-    tasksArray[idNumber].completed = true;
-    console.log(idNumber);
 
-    // take the 
-    e.target.parentNode.style.display = "none";  
 
-    // toggle completed list to display if it's not already
-    //toggleCompletedList();
-}
+    //listEl.removeChild(completedTaskDiv);
 
-const toggleCompletedList = () => {
-    // append completed task to the completed list
-    // HM... the HTML tag still exists
-    const completedTask = document.getElementById("id-0");
+    // also change tasksArray 
     
+    const id = e.target.getAttribute("id");
+    console.log(id);
+    tasksArray[id].completed = true;
 
-    // toggle
-    if(completedListEl.style.display === "none") {
-        completedListEl.style.display = "grid";
-    }else{
-        completedListEl.style.display = "none";
-    }
+    
+    //e.target.parentNode.style.display = "none";
 }
 
 addBtnEl.addEventListener('click', addTask);
 resetBtnEl.addEventListener('click', resetTasks);
+
+// TODO
+// the .hide class styling can be done later
+// i could still have one eventlistener for the checkbox
+// but now i just check which list the checkbox is attached to -- OR the tasksArray.isCompleted value
 
