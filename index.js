@@ -4,7 +4,27 @@ const listEl = document.getElementsByClassName("list")[0];
 const completedListEl = document.getElementsByClassName("completed-list")[0];
 const inputFieldEl = document.querySelector("input");
 let tasksArray = [];
+let orderTracker = 20; 
 
+// TO DO TO DO
+// I think the simplest way would be to just have a separate uncompletedTasksArray
+// and completedTasksArray
+
+// yes, so give each object: {id: number, task: "string", isCompleted: boolean}
+// then remove & append them to each arrays as necessary 
+
+// TODO TO DO
+// whenever you make a new task, give it order of 20
+// and then do +1 to the orderTracker
+// ALSO store this in localStorage
+// on refresh, get from localStorage & orderTracker = orderTracker from localStorage
+
+
+// the .hide class styling can be done later
+// refactor functions so that each function does ONE thing
+
+// ALSO, i notice that with the way i complete tasks, I can make them "visually" appear
+// out of order. i should probably reorder tasksArray.
 
 const clickCheckbox = (e) => {
     // get the checkbox's parent node to remove itself from DOM (along w/ its children)
@@ -33,12 +53,12 @@ const clickCheckbox = (e) => {
 function saveTasks() {
     // JSON.stringify because localStorage can only store strings
     localStorage.setItem("tasks", JSON.stringify(tasksArray));
-    // Update the UI to reflect the tasks
-
 }
 
 function loadTasks() {
     tasksArray = JSON.parse(localStorage.getItem('tasks'));
+
+    // order the array items based on their .order value & then put them on screen
 
     // ok, great! the tasksArray is working as intended 
 
@@ -61,6 +81,7 @@ function loadTasks() {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.id = taskId;
+        
 
         // add eventListener to the checkbox
         checkbox.addEventListener('click', clickCheckbox);
@@ -70,19 +91,13 @@ function loadTasks() {
         flexContainer.append(newTask);
 
         if(tasksArray[taskId].completed){
+            checkbox.checked = true;
             completedListEl.append(flexContainer);
         }else{
             listEl.append(flexContainer);
         }
     }
 }
-
-
-
-// load tasks from localStorage on loading the page
-loadTasks();
-
-/* inside the addBtnEl event listener, when it's clicked, call ANOTHER function that creates the <li> item, changes its text, and appends it to the list */
 
 /* inside the addBtnEl event listener, when it's clicked, call ANOTHER function that creates the <li> item, changes its text, and appends it to the list */
 
@@ -110,13 +125,12 @@ const addTask = () => {
 
     listEl.append(flexContainer);
 
-    tasksArray.push({task: inputFieldEl.value, completed: false});
+    tasksArray.push({task: inputFieldEl.value, completed: false, order: tasksArray.length});
 
     // wipe out inputFieldEl
     inputFieldEl.value = "";
 
     // saveTasks
-
     saveTasks();
 }
 
@@ -130,14 +144,13 @@ const resetTasks = () => {
     saveTasks();
 }
 
+// END OF FUNCTION DECLARATIONS
 
+// load tasks from localStorage on loading the page
+loadTasks();
 
 // event listeners for two buttons
 addBtnEl.addEventListener('click', addTask);
 resetBtnEl.addEventListener('click', resetTasks);
 
-// TODO
-// the .hide class styling can be done later
-// i could still have one eventlistener for the checkbox
-// but now i just check which list the checkbox is attached to -- OR the tasksArray.isCompleted value
 
