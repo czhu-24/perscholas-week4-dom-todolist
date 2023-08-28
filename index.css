@@ -8,6 +8,12 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: rgb(0, 0, 0);
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
 button {
     background-color: #daa520; /* gold color */
     color: white;

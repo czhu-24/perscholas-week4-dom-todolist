@@ -4,10 +4,9 @@ const listEl = document.getElementsByClassName("list")[0]; // list of not comple
 const completedListEl = document.getElementsByClassName("completed-list")[0]; 
 const inputFieldEl = document.querySelector("input");
 let tasksArray = [];
-let orderTracker = 20; 
+const orderTracker = 20; 
 
 const clickCheckbox = (e) => {
-    // get the checkbox's parent node to remove itself from DOM (along w/ its children)
 
     const completedTaskDiv = e.target.parentNode;
     // if you append / appendChild a div to a DOM element, it'll remove the div element from wherever it was in the DOM originally (if it was in the DOM)
@@ -16,7 +15,6 @@ const clickCheckbox = (e) => {
     
     const id = e.target.getAttribute("id");
     console.log(id);
-    //tasksArray[id].completed = true;
 
     // IF the tasksArray's object's property completed is true, append the completedTaskDiv to normal list
     if(tasksArray[id].completed){ // it's a truthy value afterall 
@@ -36,8 +34,8 @@ function saveTasks() {
 }
 
 function loadTasks() {
-    tasksArray = JSON.parse(localStorage.getItem('tasks')) ?? [];
-    // nullish coalescing operator to handle what to do when there's nothing stored at "tasks" key in localStorage
+    tasksArray = JSON.parse(localStorage.getItem('tasks')) || [];
+    // if localStorage has no key named "tasks", then set tasksArray to []
 
     // order the array items based on their .order value & then put them on screen
 
@@ -62,8 +60,6 @@ function loadTasks() {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.id = taskId;
-        
-
         // add eventListener to the checkbox
         checkbox.addEventListener('click', clickCheckbox);
 
