@@ -24,6 +24,7 @@ const clickCheckbox = (e) => {
         completedListEl.append(completedTaskDiv);
         tasksArray[id].completed = true;
     }
+
     saveTasks();
 }
 
@@ -31,6 +32,7 @@ const clickCheckbox = (e) => {
 function saveTasks() {
     // JSON.stringify because localStorage can only store strings
     localStorage.setItem("tasks", JSON.stringify(tasksArray));
+
 }
 
 function loadTasks() {
@@ -79,11 +81,11 @@ function loadTasks() {
 /* inside the addBtnEl event listener, when it's clicked, call ANOTHER function that creates the <li> item, changes its text, and appends it to the list */
 
 const addTask = () => {
-    // making div that's a flex container to hold both the task and its checkbox
-
-    if(!inputFieldEl.value){ // if inputFieldEl is falsy (if it's an empty string), then exit out of this function & return undefined
+    if(!inputFieldEl.value){ 
+        // if inputFieldEl is falsy (if it's an empty string), then exit out of this function & return undefined
         return;
     }
+
     const flexContainer = document.createElement("div");
     flexContainer.classList.add("flex-container");
 
@@ -106,7 +108,7 @@ const addTask = () => {
 
     listEl.append(flexContainer);
 
-    tasksArray.push({task: inputFieldEl.value, completed: false, order: tasksArray.length});
+    tasksArray.push({ task: inputFieldEl.value, completed: false, order: tasksArray.length});
 
     // wipe out inputFieldEl
     inputFieldEl.value = "";
@@ -120,15 +122,27 @@ const addTask = () => {
 const resetTasks = () => {
     inputFieldEl.value = "";
     listEl.textContent = "";
+    const listH2 = document.createElement("h2");
+    listH2.textContent = "Uncompleted tasks";
+    listEl.append(listH2);
+
     completedListEl.textContent = "";
+    const completedListH2 = document.createElement("h2");
+    completedListH2.textContent = "Completed tasks";
+    completedListEl.append(completedListH2);
+
     tasksArray.length = 0;
     saveTasks();
 }
 
+
+
 // END OF FUNCTION DECLARATIONS
 
-// load tasks from localStorage on loading the page
-loadTasks();
+// load tasks from localStorage after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+});
 
 // event listeners for two buttons
 addBtnEl.addEventListener('click', addTask);
