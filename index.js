@@ -1,30 +1,10 @@
 const addBtnEl = document.getElementById("add-task");
 const resetBtnEl = document.getElementById("reset-tasks");
-const listEl = document.getElementsByClassName("list")[0];
-const completedListEl = document.getElementsByClassName("completed-list")[0];
+const listEl = document.getElementsByClassName("list")[0]; // list of not completed tasks
+const completedListEl = document.getElementsByClassName("completed-list")[0]; 
 const inputFieldEl = document.querySelector("input");
 let tasksArray = [];
 let orderTracker = 20; 
-
-// TO DO TO DO
-// I think the simplest way would be to just have a separate uncompletedTasksArray
-// and completedTasksArray
-
-// yes, so give each object: {id: number, task: "string", isCompleted: boolean}
-// then remove & append them to each arrays as necessary 
-
-// TODO TO DO
-// whenever you make a new task, give it order of 20
-// and then do +1 to the orderTracker
-// ALSO store this in localStorage
-// on refresh, get from localStorage & orderTracker = orderTracker from localStorage
-
-
-// the .hide class styling can be done later
-// refactor functions so that each function does ONE thing
-
-// ALSO, i notice that with the way i complete tasks, I can make them "visually" appear
-// out of order. i should probably reorder tasksArray.
 
 const clickCheckbox = (e) => {
     // get the checkbox's parent node to remove itself from DOM (along w/ its children)
@@ -56,7 +36,8 @@ function saveTasks() {
 }
 
 function loadTasks() {
-    tasksArray = JSON.parse(localStorage.getItem('tasks'));
+    tasksArray = JSON.parse(localStorage.getItem('tasks')) ?? [];
+    // nullish coalescing operator to handle what to do when there's nothing stored at "tasks" key in localStorage
 
     // order the array items based on their .order value & then put them on screen
 
@@ -103,6 +84,10 @@ function loadTasks() {
 
 const addTask = () => {
     // making div that's a flex container to hold both the task and its checkbox
+
+    if(!inputFieldEl.value){ // if inputFieldEl is falsy (if it's an empty string), then exit out of this function & return undefined
+        return;
+    }
     const flexContainer = document.createElement("div");
     flexContainer.classList.add("flex-container");
 
